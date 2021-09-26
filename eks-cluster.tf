@@ -4,6 +4,7 @@ module "eks" {
   cluster_version = "1.20"
   #subnets         = module.vpc.private_subnets
   subnets         = ["subnet-08ce2d38cc53bb38b","subnet-0637180596a5a8b9d","subnet-0285d4527bbf2ac8e"]
+  cluster_enabled_log_types = ["api", "audit", "authenticator", "scheduler", "controllerManager"]
 
   tags = {
     Environment = "training"

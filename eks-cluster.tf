@@ -10,7 +10,8 @@ module "eks" {
     GithubOrg   = "terraform-aws-modules"
   }
 
-  vpc_id = module.vpc.vpc_id
+  #vpc_id = module.vpc.vpc_id
+  vpc_id = var.vpc_id
 
   workers_group_defaults = {
     root_volume_type = "gp3"

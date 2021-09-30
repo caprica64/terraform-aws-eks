@@ -6,6 +6,29 @@ module "eks" {
   subnets         = ["subnet-08ce2d38cc53bb38b","subnet-0637180596a5a8b9d","subnet-0285d4527bbf2ac8e"]
   cluster_enabled_log_types = ["api", "audit", "authenticator", "scheduler", "controllerManager"]
 
+
+  
+     map_users = [
+    {
+      userarn  = "arn:aws:iam::288693765212:user/terraformcloud"
+      username = "terraformcloud"
+      groups   = ["system:masters"]
+    },
+    {
+      userarn  = "arn:aws:iam::288693765212:user/admin"
+      username = "admin"
+      groups   = ["system:masters"]
+    },
+  ]
+
+  map_accounts = [
+    "288693765212",
+    "291045144839",
+  ]
+    
+
+
+
   tags = {
     Environment = "training"
     GithubRepo  = "terraform-aws-eks"
@@ -44,3 +67,4 @@ data "aws_eks_cluster" "cluster" {
 data "aws_eks_cluster_auth" "cluster" {
   name = module.eks.cluster_id
 }
+

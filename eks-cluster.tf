@@ -2,11 +2,19 @@ module "eks" {
   source          = "terraform-aws-modules/eks/aws"
   cluster_name    = local.cluster_name
   cluster_version = "1.20"
+  # When using local VPC creation, commented out otherwise
   #subnets         = module.vpc.private_subnets
+  # When using subnets and VPC created outside the cluster
   subnets         = ["subnet-08ce2d38cc53bb38b","subnet-0637180596a5a8b9d","subnet-0285d4527bbf2ac8e"]
   cluster_enabled_log_types = ["api", "audit", "authenticator", "scheduler", "controllerManager"]
-
-
+  
+  cluster_encryption_config = [
+    {
+      provider_key_arn = "arn:aws:kms:us-east-1:288693765212:key/516c693e-4fb2-47d4-b844-0a6c1c0e44b6"
+      resources        = ["secrets"]
+    }
+  ]
+  
   
      map_users = [
     {
@@ -25,10 +33,8 @@ module "eks" {
     "288693765212",
     "291045144839",
   ]
-    
 
-
-
+  
   tags = {
     Environment = "training"
     GithubRepo  = "terraform-aws-eks"
@@ -40,6 +46,32 @@ module "eks" {
 
   workers_group_defaults = {
     root_volume_type = "gp3"
+  }
+
+  node_groups = {
+    example = {
+      desired_capacity = 3
+      max_capacity     = 15
+      min_capacity     = 3
+      spot_instance_pools     = 4
+
+      launch_template_id      = aws_launch_template.default.id
+      launch_template_version = aws_launch_template.default.default_version
+
+      instance_types = var.instance_types
+
+      additional_tags = {
+        CustomTag = "EKS example"
+      
+      # depends_on = [
+      #   aws_iam_role_policy_attachment.example-AmazonEKSWorkerNodePolicy,
+      #   aws_iam_role_policy_attachment.example-AmazonEKS_CNI_Policy,
+      #   aws_iam_role_policy_attachment.example-AmazonEC2ContainerRegistryReadOnly,
+      # ]  
+        
+        
+      }
+    }
   }
 
   # worker_groups = [
@@ -72,24 +104,6 @@ module "eks" {
   #   },
   # ]
   
-  
-  
-  node_groups = {
-    example = {
-      desired_capacity = 3
-      max_capacity     = 15
-      min_capacity     = 3
-
-      launch_template_id      = aws_launch_template.default.id
-      launch_template_version = aws_launch_template.default.default_version
-
-      instance_types = var.instance_types
-
-      additional_tags = {
-        CustomTag = "EKS example"
-      }
-    }
-  }
 }
 
 
@@ -102,3 +116,4 @@ data "aws_eks_cluster_auth" "cluster" {
   name = module.eks.cluster_id
 }
 
+#key-arn = "arn:aws:kms:us-east-1:288693765212:key/516c693e-4fb2-47d4-b844-0a6c1c0e44b6"

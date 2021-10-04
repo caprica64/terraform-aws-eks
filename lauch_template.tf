@@ -91,6 +91,8 @@ resource "aws_launch_template" "default" {
   # Tag the LT itself
   tags = {
     CustomTag = "EKS example"
+    Project = "EKS"
+    Environment = "Dev"
   }
 
   lifecycle {

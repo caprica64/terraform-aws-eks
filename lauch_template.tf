@@ -26,7 +26,7 @@ resource "aws_launch_template" "default" {
     device_name = "/dev/xvda"
 
     ebs {
-      volume_size           = 100
+      volume_size           = 32
       volume_type           = "gp3"
       delete_on_termination = true
       # encrypted             = true
@@ -66,7 +66,9 @@ resource "aws_launch_template" "default" {
 
     tags = {
       CustomTag = "EKS example"
-      Name = "Worker Node 1"
+      Name = "Worker Node group Default"
+      Environment = "Dev"
+      Project     = "EKS"
     }
   }
 
@@ -75,8 +77,10 @@ resource "aws_launch_template" "default" {
     resource_type = "volume"
 
     tags = {
-      CustomTag = "EKS example"
-    }
+      CustomTag   = "EKS example"
+      Environment = "Dev"
+      Project     = "EKS"
+      }
   }
 
   # Supplying custom tags to EKS instances ENI's is another use-case for LaunchTemplates

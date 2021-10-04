@@ -5,7 +5,7 @@ module "eks" {
   # When using local VPC creation, commented out otherwise
   #subnets         = module.vpc.private_subnets
   # When using subnets and VPC created outside the cluster
-  subnets         = ["subnet-08ce2d38cc53bb38b","subnet-0637180596a5a8b9d","subnet-0285d4527bbf2ac8e"]
+  subnets         = ["subnet-0351a99c25dc3fbc3","subnet-08cfcfb5879fcf765","subnet-0533a467a064dfbbb"]
   cluster_enabled_log_types = ["api", "audit", "authenticator", "scheduler", "controllerManager"]
   
   cluster_encryption_config = [
@@ -50,9 +50,9 @@ module "eks" {
 
   node_groups = {
     example = {
-      desired_capacity = 3
-      max_capacity     = 15
-      min_capacity     = 3
+      desired_capacity        = 3
+      max_capacity            = 15
+      min_capacity            = 3
       spot_instance_pools     = 4
 
       launch_template_id      = aws_launch_template.default.id

@@ -42,22 +42,54 @@ module "eks" {
     root_volume_type = "gp3"
   }
 
-  worker_groups = [
-    {
-      name                          = "worker-group-1"
-      instance_type                 = "t3.micro"
-      additional_userdata           = "echo foo bar"
-      asg_desired_capacity          = 2
-      additional_security_group_ids = [aws_security_group.worker_group_mgmt_one.id]
-    },
-    {
-      name                          = "worker-group-2"
-      instance_type                 = "t2.micro"
-      additional_userdata           = "echo foo bar"
-      additional_security_group_ids = [aws_security_group.worker_group_mgmt_two.id]
-      asg_desired_capacity          = 4
-    },
-  ]
+  # worker_groups = [
+  #   {
+  #     name                          = "worker-group-1"
+  #     instance_type                 = "t3.micro"
+  #     additional_userdata           = "echo foo bar"
+  #     asg_desired_capacity          = 2
+  #     additional_security_group_ids = [aws_security_group.worker_group_mgmt_one.id]
+  #   },
+  #   {
+  #     name                          = "worker-group-2"
+  #     instance_type                 = "t2.micro"
+  #     additional_userdata           = "echo foo bar"
+  #     additional_security_group_ids = [aws_security_group.worker_group_mgmt_two.id]
+  #     asg_desired_capacity          = 2
+  #   },
+  # ]
+
+    # Worker groups (using Launch Templates)
+  # worker_groups_launch_template = [
+  #   {
+  #     name                    = "spot-1"
+  #     override_instance_types = ["m5.large", "m5a.large", "m5d.large", "m5ad.large"]
+  #     spot_instance_pools     = 4
+  #     asg_max_size            = 5
+  #     asg_desired_capacity    = 5
+  #     kubelet_extra_args      = "--node-labels=node.kubernetes.io/lifecycle=spot"
+  #     public_ip               = true
+  #   },
+  # ]
+  
+  
+  
+  node_groups = {
+    example = {
+      desired_capacity = 3
+      max_capacity     = 15
+      min_capacity     = 3
+
+      launch_template_id      = aws_launch_template.default.id
+      launch_template_version = aws_launch_template.default.default_version
+
+      instance_types = var.instance_types
+
+      additional_tags = {
+        CustomTag = "EKS example"
+      }
+    }
+  }
 }
 
 

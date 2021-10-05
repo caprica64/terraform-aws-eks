@@ -74,6 +74,34 @@ module "eks" {
     }
   }
 
+
+  node_groups = {
+    example = {
+      desired_capacity        = 3
+      max_capacity            = 15
+      min_capacity            = 3
+      spot_instance_pools     = 4
+
+      launch_template_id      = aws_launch_template.secondary.id
+      launch_template_version = aws_launch_template.default.default_version
+
+      instance_types = var.instance_types
+
+      additional_tags = {
+        CustomTag = "EKS example - secondary"
+      
+      # depends_on = [
+      #   aws_iam_role_policy_attachment.example-AmazonEKSWorkerNodePolicy,
+      #   aws_iam_role_policy_attachment.example-AmazonEKS_CNI_Policy,
+      #   aws_iam_role_policy_attachment.example-AmazonEC2ContainerRegistryReadOnly,
+      # ]  
+        
+        
+      }
+    }
+  }
+
+
   # worker_groups = [
   #   {
   #     name                          = "worker-group-1"

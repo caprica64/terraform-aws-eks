@@ -74,7 +74,7 @@ module "eks" {
     }
 
 
-    example = {
+    example2 = {
       desired_capacity        = 1
       max_capacity            = 15
       min_capacity            = 1

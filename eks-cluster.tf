@@ -75,9 +75,9 @@ module "eks" {
 
 
     example = {
-      desired_capacity        = 3
+      desired_capacity        = 1
       max_capacity            = 15
-      min_capacity            = 3
+      min_capacity            = 1
       spot_instance_pools     = 4
 
       launch_template_id      = aws_launch_template.secondary.id

@@ -113,7 +113,7 @@ resource "aws_launch_template" "default" {
 
 resource "aws_launch_template" "secondary" {
   #name_prefix            = "eks-example-as-resource"
-  name                   = "Launch Template 2"
+  name                   = "LaunchTemplate2"
   description            = "SecondaryLaunch-Template as resource"
   update_default_version = true
 

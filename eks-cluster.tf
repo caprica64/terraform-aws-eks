@@ -48,6 +48,10 @@ module "eks" {
     root_volume_type = "gp3"
   }
 
+##
+## Node group 1
+##
+
   node_groups = {
     example = {
       desired_capacity        = 3
@@ -58,7 +62,7 @@ module "eks" {
       launch_template_id      = aws_launch_template.default.id
       launch_template_version = aws_launch_template.default.default_version
 
-      instance_types = var.instance_types
+      instance_types = var.instance_types-NG1
 
       additional_tags = {
         CustomTag = "EKS example"
@@ -73,6 +77,9 @@ module "eks" {
       }
     }
 
+##
+## Node group 2
+##
 
     example2 = {
       desired_capacity        = 1
@@ -83,7 +90,7 @@ module "eks" {
       launch_template_id      = aws_launch_template.secondary.id
       launch_template_version = aws_launch_template.secondary.default_version
 
-      instance_types = var.instance_types
+      instance_types = var.instance_types-NG2
 
       additional_tags = {
         CustomTag = "EKS example - secondary"

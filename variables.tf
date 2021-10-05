@@ -10,11 +10,18 @@ variable "region" {
   description = "AWS Region to use"
 }
 
-variable "instance_types" {
+variable "instance_types-NG1" {
   description = "Instance types"
   # Smallest recommended, where ~1.1Gb of 2Gb memory is available for the Kubernetes pods after ‘warming up’ Docker, Kubelet, and OS
   type    = list(string)
   default = ["t3.medium"]
+}
+
+variable "instance_types-NG2" {
+  description = "Instance types"
+  # Smallest recommended, where ~1.1Gb of 2Gb memory is available for the Kubernetes pods after ‘warming up’ Docker, Kubelet, and OS
+  type    = list(string)
+  default = ["t3.small"]
 }
 
 variable "kms_arn" {

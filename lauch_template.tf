@@ -18,11 +18,11 @@
 # Trivia: AWS transparently creates a copy of your LaunchTemplate and actually uses that copy then for the node group. If you DONT use a custom AMI,
 # then the default user-data for bootstrapping a cluster is merged in the copy.
 resource "aws_launch_template" "default" {
-  #name_prefix            = "eks-example-as-resource" ### <<- You can use name prefix and have a computed sufix for your worknode name.
-  name                   = "LaunchTemplate1"
-  description            = "Default Launch-Template as resource"
-  update_default_version = true
-  kubelet_extra_args      = "--node-labels=node.kubernetes.io/lifecycle=spot"
+  #name_prefix              = "eks-example-as-resource" ### <<- You can use name prefix and have a computed sufix for your worknode name.
+  name                      = "LaunchTemplate1"
+  description               = "Default Launch-Template as resource"
+  update_default_version    = true
+  #kubelet_extra_args        = "--node-labels=node.kubernetes.io/lifecycle=spot"
 
   block_device_mappings {
     device_name = "/dev/xvda"
@@ -67,8 +67,8 @@ resource "aws_launch_template" "default" {
     resource_type = "instance"
 
     tags = {
-      CustomTag = "EKS example"
-      Name = "Worker Node group Default"
+      CustomTag   = "EKS example"
+      Name        = "Worker Node group Default"
       Environment = "Dev"
       Project     = "EKS"
     }

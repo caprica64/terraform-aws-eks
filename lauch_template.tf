@@ -19,6 +19,7 @@
 # then the default user-data for bootstrapping a cluster is merged in the copy.
 resource "aws_launch_template" "default" {
   name_prefix            = "eks-example-as-resource"
+  name                   = "LaunchTemplate1"
   description            = "Default Launch-Template as resource"
   update_default_version = true
 

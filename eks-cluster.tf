@@ -58,7 +58,7 @@ module "eks" {
       max_capacity            = 15
       min_capacity            = 3
       spot_instance_pools     = 4
-      kubelet_extra_args      = "--node-labels=spot=false"
+      kubelet_extra_args      = "--node-labels=spot=true"
 
       launch_template_id      = aws_launch_template.default.id
       launch_template_version = aws_launch_template.default.default_version

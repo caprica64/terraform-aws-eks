@@ -22,7 +22,6 @@ resource "aws_launch_template" "default" {
   name                      = "LaunchTemplate1"
   description               = "Default Launch-Template as resource"
   update_default_version    = true
-  #kubelet_extra_args        = "--node-labels=node.kubernetes.io/lifecycle=spot"
 
   block_device_mappings {
     device_name = "/dev/xvda"

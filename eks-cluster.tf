@@ -81,7 +81,7 @@ module "eks" {
       spot_instance_pools     = 4
 
       launch_template_id      = aws_launch_template.secondary.id
-      launch_template_version = aws_launch_template.default.default_version
+      launch_template_version = aws_launch_template.secondary.default_version
 
       instance_types = var.instance_types
 

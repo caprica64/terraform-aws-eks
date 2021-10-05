@@ -72,10 +72,8 @@ module "eks" {
         
       }
     }
-  }
 
 
-  node_groups = {
     example = {
       desired_capacity        = 3
       max_capacity            = 15

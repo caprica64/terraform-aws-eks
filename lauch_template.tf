@@ -45,7 +45,7 @@ resource "aws_launch_template" "default" {
   network_interfaces {
     associate_public_ip_address = false
     delete_on_termination       = true
-    security_groups             = [module.eks.worker_security_group_id, module.security_groups.aws_security_group.all_worker_mgmt]
+    security_groups             = [module.eks.worker_security_group_id, aws_security_group.all_worker_mgmt.id]
   }
 
   # if you want to use a custom AMI

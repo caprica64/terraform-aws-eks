@@ -10,7 +10,7 @@ module "eks" {
   
   cluster_encryption_config = [
     {
-      provider_key_arn = "arn:aws:kms:us-east-1:288693765212:key/516c693e-4fb2-47d4-b844-0a6c1c0e44b6"
+      provider_key_arn = var.kms_arn
       resources        = ["secrets"]
     }
   ]
@@ -115,5 +115,3 @@ data "aws_eks_cluster" "cluster" {
 data "aws_eks_cluster_auth" "cluster" {
   name = module.eks.cluster_id
 }
-
-#key-arn = "arn:aws:kms:us-east-1:288693765212:key/516c693e-4fb2-47d4-b844-0a6c1c0e44b6"

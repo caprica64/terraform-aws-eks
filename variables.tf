@@ -16,3 +16,9 @@ variable "instance_types" {
   type    = list(string)
   default = ["t3.medium"]
 }
+
+variable "kms_arn" {
+  #default = "arn:aws:kms:us-east-1:288693765212:key/516c693e-4fb2-47d4-b844-0a6c1c0e44b6"
+  type = string
+  description = "AWS Region to use"
+}

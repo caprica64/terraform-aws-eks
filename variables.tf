@@ -1,5 +1,5 @@
 variable "vpc_id" {
-  default = "vpc-037730942b4bae1b8"
+  default = "vpc-0633f54b18096d126"
   type = string
   description = "VPC from an existant project"
 }

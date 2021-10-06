@@ -65,7 +65,7 @@ resource "aws_iam_role" "LoadBalancerRole" {
     {
       "Action": "sts:AssumeRole",
       "Principal": {
-        "Service": "ec2.amazonaws.com"
+        "Service": "sts.amazonaws.com"
       },
       "Effect": "Allow",
       "Sid": ""

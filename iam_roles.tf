@@ -63,12 +63,16 @@ resource "aws_iam_role" "LoadBalancerRole" {
   "Version": "2012-10-17",
   "Statement": [
     {
-      "Action": "sts:AssumeRole",
-      "Principal": {
-        "Service": "sts.amazonaws.com"
-      },
       "Effect": "Allow",
-      "Sid": ""
+      "Principal": {
+        "Federated": "arn:aws:iam::288693765212:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/55E804D02AD1FAB9DA2C13588503E363"
+      },
+      "Action": "sts:AssumeRoleWithWebIdentity",
+      "Condition": {
+        "StringEquals": {
+          "https://oidc.eks.us-east-1.amazonaws.com/id/55E804D02AD1FAB9DA2C13588503E363:aud": "sts.amazonaws.com"
+        }
+      }
     }
   ]
 }

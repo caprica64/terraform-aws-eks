@@ -65,12 +65,12 @@ resource "aws_iam_role" "LoadBalancerRole" {
     {
       "Effect": "Allow",
       "Principal": {
-        "Federated": "arn:aws:iam::288693765212:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/55E804D02AD1FAB9DA2C13588503E363"
+        "Federated": "arn:aws:iam::288693765212:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/3E0C7F9F1226BA18E815252C56E49E0E"
       },
       "Action": "sts:AssumeRoleWithWebIdentity",
       "Condition": {
         "StringEquals": {
-          "https://oidc.eks.us-east-1.amazonaws.com/id/55E804D02AD1FAB9DA2C13588503E363:sub": "system:serviceaccount:kube-system:aws-load-balancer-controller"
+          "https://oidc.eks.us-east-1.amazonaws.com/id/3E0C7F9F1226BA18E815252C56E49E0E:sub": "system:serviceaccount:kube-system:aws-load-balancer-controller"
         }
       }
     }

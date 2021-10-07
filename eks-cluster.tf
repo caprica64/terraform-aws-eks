@@ -8,10 +8,10 @@ module "eks" {
   subnets         = ["subnet-0351a99c25dc3fbc3","subnet-08cfcfb5879fcf765","subnet-0533a467a064dfbbb"]
   cluster_enabled_log_types = ["api", "audit", "authenticator", "scheduler", "controllerManager"]
   
-  workers_additional_policies = [aws_iam_policy.worker_policy.arn]
+  #workers_additional_policies = [aws_iam_policy.worker_policy.arn]
 
   write_kubeconfig   = true
-  config_output_path = "./"  
+  #config_output_path = "./"  
   
   cluster_encryption_config = [
     {
@@ -81,12 +81,15 @@ module "eks" {
   }
 }
 
-resource "aws_iam_policy" "worker_policy" {
-  name        = "worker-policy"
-  description = "Worker policy for the ALB Ingress"
+##
+##Provides IAM policy for the worker nodes to manage ALB
+##
+# resource "aws_iam_policy" "worker_policy" {
+#   name        = "worker-policy"
+#   description = "Worker policy for the ALB Ingress"
 
-  policy = file("iam-policy.json")
-}
+#   policy = file("iam-policy.json")
+# }
 
 
 
@@ -97,3 +100,38 @@ data "aws_eks_cluster" "cluster" {
 data "aws_eks_cluster_auth" "cluster" {
   name = module.eks.cluster_id
 }
+
+
+##
+## The following two blocks were adapted from the blog > https://learnk8s.io/terraform-eks
+##
+# provider "helm" {
+#   version = "1.3.1"
+#   kubernetes {
+#     host                   = data.aws_eks_cluster.cluster.endpoint
+#     cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
+#     token                  = data.aws_eks_cluster_auth.cluster.token
+#     load_config_file       = false
+#   }
+# }
+
+
+# resource "helm_release" "ingress" {
+#   name       = "ingress"
+#   chart      = "aws-alb-ingress-controller"
+#   repository = "https://charts.helm.sh/incubator"
+#   version    = "1.0.2"
+
+#   set {
+#     name  = "autoDiscoverAwsRegion"
+#     value = "true"
+#   }
+#   set {
+#     name  = "autoDiscoverAwsVpcID"
+#     value = "true"
+#   }
+#   set {
+#     name  = "clusterName"
+#     value = local.cluster_name
+#   }
+# }

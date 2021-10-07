@@ -8,6 +8,11 @@ module "eks" {
   subnets         = ["subnet-0351a99c25dc3fbc3","subnet-08cfcfb5879fcf765","subnet-0533a467a064dfbbb"]
   cluster_enabled_log_types = ["api", "audit", "authenticator", "scheduler", "controllerManager"]
   
+  workers_additional_policies = [aws_iam_policy.worker_policy.arn]
+
+  write_kubeconfig   = true
+  config_output_path = "./"  
+  
   cluster_encryption_config = [
     {
       provider_key_arn = var.kms_arn
@@ -75,6 +80,15 @@ module "eks" {
     }
   }
 }
+
+resource "aws_iam_policy" "worker_policy" {
+  name        = "worker-policy"
+  description = "Worker policy for the ALB Ingress"
+
+  policy = file("iam-policy.json")
+}
+
+
 
 data "aws_eks_cluster" "cluster" {
   name = module.eks.cluster_id
